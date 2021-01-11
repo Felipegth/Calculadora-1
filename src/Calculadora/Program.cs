@@ -12,10 +12,10 @@ namespace Calculadora
             Console.WriteLine("========================");
 
             Console.WriteLine("Digite o primeiro valor:");
-            var primeiroValor = Console.ReadLine() ?? "0";
+            var primeiroValor = Convert.ToDouble(Console.ReadLine() ?? "0");
 
             Console.WriteLine("Digite o segundo valor:");
-            var segundoValor = Console.ReadLine() ?? "0";
+            var segundoValor = Convert.ToDouble(Console.ReadLine() ?? "0");
 
             Console.WriteLine("Qual operação?");
             Console.WriteLine("1) Adição");
@@ -24,31 +24,32 @@ namespace Calculadora
             Console.WriteLine("4) Divisão");
             var operacao = Console.ReadLine() ?? string.Empty;
 
-            var resultado = 0.0;
+            IOperacao instanciaOperacao = null;
             switch (operacao)
             {
                 case "1":
-                    resultado = Convert.ToDouble(primeiroValor) + Convert.ToDouble(segundoValor);
+                    instanciaOperacao = new Soma(primeiroValor, segundoValor);
                     break;
                 case "2":
-                    resultado = Convert.ToDouble(primeiroValor) - Convert.ToDouble(segundoValor);
+                    instanciaOperacao = new Divisao(primeiroValor, segundoValor);
                     break;
                 case "3":
-                    resultado = Convert.ToDouble(primeiroValor) * Convert.ToDouble(segundoValor);
+                    instanciaOperacao = new Multiplicacao(primeiroValor, segundoValor);
                     break;
                 case "4":
-                    resultado = Convert.ToDouble(primeiroValor) / Convert.ToDouble(segundoValor);
+                    instanciaOperacao = new Divisao(primeiroValor, segundoValor);
                     break;
             }
 
+            var operacoes = new Operacoes(instanciaOperacao);
             Console.WriteLine("------------------------");
-            Console.WriteLine("O resultado é: " + resultado); // Não usar
-            Console.WriteLine("O resultado é: {0}", resultado);
-            Console.WriteLine($"O resultado é: {resultado}");
+            Console.WriteLine("O resultado é: " + operacoes.Resultado()); // Não usar
+            Console.WriteLine("O resultado é: {0}", operacoes.Resultado());
+            Console.WriteLine($"O resultado é: {operacoes.Resultado()}");
 
             StringBuilder sb = new StringBuilder()
                            .Append("O resultado é: ")
-                           .Append(resultado);
+                           .Append(operacoes.Resultado());
             Console.WriteLine(sb.ToString());
 
             Console.WriteLine("========================");
